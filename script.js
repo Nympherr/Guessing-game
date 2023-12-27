@@ -7,6 +7,8 @@ const username = document.getElementById('username');
 const homepage = document.getElementById('homepage');
 const leaderbord = document.getElementById('leaderbord');
 const difficultyForm = document.getElementById('difficulty');
+const title = document.getElementById('title');
+const score = document.getElementById('score');
 
 let difficulty = 1;
 let players = {};
@@ -38,7 +40,7 @@ class Game{
             this.gameInfo = createGameStructure(difficulty);
             this.cardInfo = createPlayableCards(this.gameInfo['allCards']);
             this.createCardContainer();
-            points.innerText = "Points: " + this.userInfo['points'];
+            points.innerText = "Taškai: " + this.userInfo['points'];
             const cardButtons = document.querySelectorAll('.card-btn');
             cardButtonListener(cardButtons, this);
             this.gameRunning = true;
@@ -67,7 +69,7 @@ class Game{
         if(this.userInfo['firstCheckedCard'].innerText == this.userInfo['secondCheckedCard'].innerText){
             this.userInfo['foundPair'] = true;
             this.userInfo['points'] += countPoints(this.userInfo['numberOfTries']);
-            points.innerText = "Points: " + this.userInfo['points'];
+            points.innerText = "Taškai: " + this.userInfo['points'];
             this.updateCardInfo();
             if(this.checkGameEnd()){
                 this.gameRunning = false;
@@ -99,9 +101,11 @@ class Game{
             resetButton.style.display = 'none';
             let endingText = document.createElement('h2');
             endingText.id = "endingText";
-            endingText.textContent = "YOU FINISHED THIS GAME";
+            endingText.textContent = "ŽAIDIMAS BAIGTAS";
+            points.textContent = "Surinkti taškai: " + this.userInfo['points'];
+            remainingPairs.style.display = 'none';
+
             cardContainer.appendChild(endingText);
-            console.log(Game.leaderbord);
             Game.arrangeLeaderbord();
             return true;
         }
@@ -128,7 +132,6 @@ class Game{
             }
         }
 
-        console.log(Game.leaderbord[0]);
         for(let j = 0; j < Object.keys(Game.leaderbord).length; j++){
             finalLeaderbord[Game.leaderbord[j].userInfo['name']] = Game.leaderbord[j].userInfo['points'];
         }
@@ -142,14 +145,11 @@ class Game{
         for(let x = 0; x < finalLeaderbordArray.length; x++){
             sessionStorage.setItem(finalLeaderbordArray[x][0], finalLeaderbordArray[x][1]);
         }
-        console.log(sessionStorage);
-
-        console.log(finalLeaderbordArray);
-
         Game.createLeaderbordTable();
 
     }
     static createLeaderbordTable(){
+
 
         let sessionStorageArray = [];
 
@@ -162,9 +162,10 @@ class Game{
             return b[1] - a[1];
         })
 
-        console.log(sessionStorage);
-        console.log(sessionStorageArray);
-        
+        if(sessionStorageArray.length > 0){
+            score.style.display = 'block';
+        }
+
         for(let k = 0; k < sessionStorageArray.length; k++){
 
             let row = document.createElement('div');
@@ -189,11 +190,10 @@ class Game{
             this.cardInfo = this.cardInfo.filter(this.checkCardValue);
             this.gameInfo['remainingCards'] -= 2;
             this.gameInfo['remainingPairs'] -= 1;
-            remainingPairs.innerText = "Remaining pairs: " + this.gameInfo['remainingPairs'];
+            remainingPairs.innerText = "Likusios poros: " + this.gameInfo['remainingPairs'];
     }
 
     checkCardValue = (card) =>{
-
         return (card.value != parseInt(this.userInfo['firstCheckedCard'].innerText));
     }
 
@@ -207,32 +207,41 @@ class Game{
             if(elementInRow == 0){
                 row = document.createElement('div');
                 row.id = "container-div";
+                row.style.display = 'flex';
+                row.style.height = '100%';
             }
             button = document.createElement('button');
             button.classList.add('card-btn');
             button.classList.add('not-checked');
+            button.style.width = '100%';
             button.textContent = this.cardInfo[i].value;
             row.appendChild(button);
             elementInRow++;
 
-            if(elementInRow == 5){
-                elementInRow = 0;
-                cardContainer.appendChild(row);
+            if(difficulty == 1 || difficulty == 2){
+                if(elementInRow == 5){
+                    elementInRow = 0;
+                    cardContainer.appendChild(row);
+                }
             }
+            else{
+                if(elementInRow == 8){
+                    elementInRow = 0;
+                    cardContainer.appendChild(row);
+                }
+            }
+
         }
     }
 
     static removeCardContainer(){
         const div = document.querySelectorAll('#container-div');
         const button = document.querySelectorAll('.card-btn');
-        console.log("veikia");
         for(let i = 0; i < button.length; i++){
             button[i].remove();
-            console.log("irgi");
         }
         for(let j = 0; j < div.length; j++){
             div[j].remove();
-            console.log("divai irgi");
         }
     }
 }
@@ -241,7 +250,6 @@ Game.createLeaderbordTable();
 
 function cardButtonListener(nodeList, game){
 
-    console.log(nodeList);
     let selectedNumber;
     let indexOfFirstNumber = null;
     let indexOfSecondNumber = null;
@@ -295,7 +303,7 @@ function createGameStructure(difficulty){
     gameInfo.remainingCards = gameInfo['allCards'];
     gameInfo.allPairs = gameInfo['allCards'] / 2;
     gameInfo.remainingPairs = gameInfo['allPairs'];
-    remainingPairs.innerText = "Remaining pairs: " + gameInfo['remainingPairs'];
+    remainingPairs.innerText = "Likusios poros: " + gameInfo['remainingPairs'];
 
     return gameInfo;
 }
@@ -344,11 +352,11 @@ function shuffleArray(array) {
 function startNewGame(){
     let playerNumber = 'player' + Game.players;
     players[playerNumber] = new Game(username.value, difficulty);
-    console.log(players);
 }
 
 startButton.addEventListener('click', () => {
     startNewGame();
+    cardContainer.style.display = 'flex';
     startButton.style.display = 'none';
     username.style.display = 'none';
     leaderbord.style.display = 'none';
@@ -357,6 +365,7 @@ startButton.addEventListener('click', () => {
     homepage.style.display = 'block';
     points.style.display = 'block';
     difficultyForm.style.display = 'none';
+    title.style.display = 'none';
  });
 resetButton.addEventListener('click', () => {
     Game.removeCardContainer();
@@ -365,6 +374,7 @@ resetButton.addEventListener('click', () => {
 
 homepage.addEventListener('click', () => {
     Game.removeCardContainer();
+    cardContainer.style.display = 'none';
     homepage.style.display = 'none';
     remainingPairs.style.display = 'none';
     points.style.display = 'none';
@@ -372,7 +382,8 @@ homepage.addEventListener('click', () => {
     username.style.display = 'block';
     leaderbord.style.display = 'block';
     resetButton.style.display = 'none';
-    difficultyForm.style.display = 'block';
+    difficultyForm.style.display = 'flex';
+    title.style.display = 'block';
     if(document.getElementById('endingText')){
         let endingText = document.getElementById('endingText');
         endingText.remove();
@@ -380,12 +391,9 @@ homepage.addEventListener('click', () => {
  });
 
 difficultyForm.addEventListener('change', () => {
-
     let selectedDifficulty = document.querySelector('input[name="difficulty"]:checked');
 
     if (selectedDifficulty) {
         difficulty = Number(selectedDifficulty.value);
-        console.log(typeof(difficulty));
-        console.log(difficulty);
     }
 })

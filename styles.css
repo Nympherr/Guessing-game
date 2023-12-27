@@ -1,18 +1,101 @@
+html{
+    background-color: #ddbffb;
+}
 body{
     display: flex;
     align-items: center;
     flex-direction: column;
     margin-top: 200px;
 }
-
-.not-checked{
-    /* background-color: black; */
+h2{
+    margin: 0;
+}
+.card-btn{
+    transition: 0.7s;
+}
+.card-btn:disabled{
+    background-color: white;
     color: black;
+}
+.not-checked:hover{
+    transform: scale(1.05);
+    background-color: #b2b0b0;
+    color: #b2b0b0;
+}
+.not-checked{
+    background-color: #867f7f;
+    color: #867f7f;
 }
 .hidden-div{
     visibility: hidden;
 }
 .pointColumn,.nameColumn{
-    width: 100px;
+    width: 200px;
     display: inline-block;
+}
+#difficulty{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+#username{
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 5px;
+    border: 1px solid black;
+}
+#score{
+    margin-top: 50px;
+}
+#diff-level{
+    font-size: 20px;
+}
+#card-container{
+    width: 300px;
+    height: 200px;
+    flex-direction: column;
+}
+#additional-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#userPoints{
+    margin-top: 20px;
+}
+#resetButton{
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: #93b669;
+}
+#homepage{
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: #e57551;  
+}
+.card-btn{
+    border-radius: 10px;
+    border: 1px solid black;
+}
+#card-container, #container-div{
+    gap: 2px;
+}
+#startButton{
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 3px 15px;
+    background-color: #ffcd71;
+}
+#homepage:hover, #resetButton:hover, #startButton:hover{
+    transform: scale(1.02);
+}
+@media(min-width:300px) and (max-width:425px){
+    #title{
+        font-size: 23px;
+    }
 }

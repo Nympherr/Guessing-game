@@ -8,26 +8,32 @@
     <script defer src="./script.js"></script>
 </head>
 <body>
-
-    <div id="card-container">
+    <h1 id="title">Atminties lavinimo žaidimas</h1>
+    <div id="card-container" style="display: none;">
         
     </div>
     <div id="additional-info">
         <h2 id="userPoints" style="display:none"></h2>
         <h2 id="remainingPairs" style="display:none"></h2>
-        <button id="resetButton" style="display:none">Reset game</button>
-        <input type="text" placeholder="Vardas" id="username">
-        <button id="startButton">Start game</button>
-        <form id="difficulty">
-            <h2>Sunkumo lygis</h2>
-            <input type="radio" id="easy" name="difficulty" checked="checked" value="1">Lengvas</input>
-            <input type="radio" id="medium" name="difficulty" value="2">Vidutinis</input>
-            <input type="radio" id="hard" name="difficulty" value="3">Sunkus</input>
+        <button id="resetButton" style="display:none; width: 100%;">Restartuoti žaidimą</button>
+        <form id="difficulty" style="display: flex; flex-direction: column; align-items: center;">
+            <span id="diff-level">Sunkumo lygis</span>
+            <div>
+                <input type="radio" id="easy" name="difficulty" checked="checked" value="1">Lengvas</input>
+                <input type="radio" id="medium" name="difficulty" value="2">Vidutinis</input>
+                <input type="radio" id="hard" name="difficulty" value="3">Sunkus</input>
+            </div>
         </form>
-        <button id="homepage" style="display:none">Homepage</button>
+        <div>
+            <input type="text" placeholder="Vardas" id="username" style="width: 100%;">
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button id="startButton" style="width: 100%;">Pradėti žaidimą</button>
+        </div>
+        <button id="homepage" style="display:none; width: 100%;">Pagrindinis puslapis</button>
     </div>
     <div id="leaderbord">
-        <h1>LEADERBORDS</h1>
+        <h1 id="score" style="display: none;"><u>Geriausi žaidėjai</u></h1>
     </div>
 </body>
 </html>

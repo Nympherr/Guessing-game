@@ -1,0 +1,18 @@
+body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+}
+
+.not-checked{
+    /* background-color: black; */
+    color: black;
+}
+.hidden-div{
+    visibility: hidden;
+}
+.pointColumn,.nameColumn{
+    width: 100px;
+    display: inline-block;
+}

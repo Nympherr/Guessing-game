@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paveikslėlių žaidimas</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="./script.js"></script>
+</head>
+<body>
+
+    <div id="card-container">
+        
+    </div>
+    <div id="additional-info">
+        <h2 id="userPoints" style="display:none"></h2>
+        <h2 id="remainingPairs" style="display:none"></h2>
+        <button id="resetButton" style="display:none">Reset game</button>
+        <input type="text" placeholder="Vardas" id="username">
+        <button id="startButton">Start game</button>
+        <form id="difficulty">
+            <h2>Sunkumo lygis</h2>
+            <input type="radio" id="easy" name="difficulty" checked="checked" value="1">Lengvas</input>
+            <input type="radio" id="medium" name="difficulty" value="2">Vidutinis</input>
+            <input type="radio" id="hard" name="difficulty" value="3">Sunkus</input>
+        </form>
+        <button id="homepage" style="display:none">Homepage</button>
+    </div>
+    <div id="leaderbord">
+        <h1>LEADERBORDS</h1>
+    </div>
+</body>
+</html>
